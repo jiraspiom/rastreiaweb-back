@@ -87,6 +87,49 @@ rota.get('/tracker.js', async c => {
   console.log('entrou')
   const script = `
     (function() {
+      const scriptElement = document.currentScript;
+      const scriptUrl = new URL(scriptElement.src);
+      const userId = scriptUrl.searchParams.get('id');
+
+      if (!userId) {
+        console.error('ID do usuário não fornecido.');
+        return;
+      }
+
+      const data = {
+        userId: userId,
+        pageUrl: window.location.href,
+        referrer: document.referrer,
+        userAgent: navigator.userAgent,
+        screenResolution: \`\${window.screen.width}x\${window.screen.height}\`,
+        language: navigator.language,
+        timestamp: new Date().toISOString(),
+      };
+
+      fetch('https://seuservidor.com/track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          if (!response.ok) {
+            console.error('Erro ao enviar dados de análise.');
+          }
+        })
+        .catch(error => {
+          console.error('Erro na requisição:', error);
+        });
+    })();
+  `
+
+  return c.text(script, 200, { 'Content-Type': 'application/javascript' })
+})
+rota.get('/tracker1.js', async c => {
+  console.log('entrou')
+  const script = `
+    (function() {
         const userId = new URLSearchParams(window.location.search).get('id');
         if (!userId) return;
         

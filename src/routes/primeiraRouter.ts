@@ -43,6 +43,8 @@ rota.post('/api/register', async c => {
 
 // Rota para receber dados de rastreamento
 rota.post('/api/track', async c => {
+  console.log('dipsaprou o tack')
+
   const body = await c.req.json()
   const { userId, url, referrer, timestamp } = body
 
@@ -106,7 +108,7 @@ rota.get('/tracker.js', async c => {
         timestamp: new Date().toISOString(),
       };
 
-      fetch('https://seuservidor.com/track', {
+      fetch('rastreiaweb-back.vercel.app/v1/api/track', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,7 +135,7 @@ rota.get('/tracker1.js', async c => {
         const userId = new URLSearchParams(window.location.search).get('id');
         if (!userId) return;
         
-        fetch("http://localhost:3003/api/track", {
+        fetch("http://localhost:3003/v1/api/track", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

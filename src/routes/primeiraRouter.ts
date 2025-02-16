@@ -98,6 +98,8 @@ rota.get('/tracker.js', async c => {
         return;
       }
 
+      console.log('usuario identificado', userId)
+
       const data = {
         userId: userId,
         pageUrl: window.location.href,
@@ -108,7 +110,7 @@ rota.get('/tracker.js', async c => {
         timestamp: new Date().toISOString(),
       };
 
-      fetch('rastreiaweb-back.vercel.app/v1/api/track', {
+      fetch('http://rastreiaweb-back.vercel.app/v1/api/track', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +137,7 @@ rota.get('/tracker1.js', async c => {
         const userId = new URLSearchParams(window.location.search).get('id');
         if (!userId) return;
         
-        fetch("http://localhost:3003/v1/api/track", {
+        fetch("http://rastreiaweb-back.vercel.app/v1/api/track", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

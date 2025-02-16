@@ -2,7 +2,8 @@
   "name": "rastreioweb-back",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "vercel-build": "npx prisma generate"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
